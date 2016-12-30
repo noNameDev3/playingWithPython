@@ -6,9 +6,10 @@ from dateutil.relativedelta import relativedelta
 
 top = Tk()
 top.geometry("300x300")
+#top.configure(bg='black')
 top.title("Koliko sam star?")
 
-def hello():
+def calculateAge():
     try:
         rodjendan = datetime.date(int(godina.get()), int(mjesec.get()), int(dan.get()))
         star = relativedelta(datetime.date.today(), rodjendan)
@@ -21,7 +22,7 @@ def hello():
 
 var2 = StringVar()
 
-B1 = Button(top, text = "Izračunaj koliko sam star", command = hello)
+B1 = Button(top, text = "Izračunaj koliko sam star", command = calculateAge)
 B1.place(relx=0.5, rely=0.6, anchor=CENTER)
 
 var = StringVar()
