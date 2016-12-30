@@ -1,0 +1,3 @@
+title=HelloWorld
+author=drDR
+orientation=portrait
