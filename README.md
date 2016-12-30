@@ -1,0 +1,2 @@
+# playingWithPython
+Python mini projects
