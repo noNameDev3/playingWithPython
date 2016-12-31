@@ -1,12 +1,12 @@
 import kivy
-kivy.require('1.7.2') # replace with your current kivy version !
+kivy.require('1.8.0') # replace with your current kivy version !
 
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
-from kivy.properties import StringProperty, ObjectProperty
+from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
 
 class CustomDropDown(DropDown):
     for i in range(5):
@@ -17,6 +17,7 @@ class HomeScreen(Screen):
 
     top_layout = ObjectProperty(None)
     dd_btn = ObjectProperty(None)
+
     unicode_string = StringProperty("""Unesi dan, mjesec i godinu rođenja: """)
 
     def __init__(self, *args, **kwargs):
@@ -41,7 +42,7 @@ class HomeScreen(Screen):
             dropdown.add_widget(btn)
 
         # create a big main button
-        mainbutton = Button(text='1', size_hint=(1, 1))
+        mainbutton = Button(text='1', size_hint=(0.5, 0.3), pos_hint= {'center_x': 0.5} )
         print ('yay') 
 
         # show the dropdown menu when the main button is released
@@ -54,6 +55,7 @@ class HomeScreen(Screen):
         # one last thing, listen for the selection in the dropdown list and
         # assign the data to the button text.
         dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
+
         #dropdown.bind(on_select=lambda instance, x: setattr(dd_btn, 'text', x))
 
         self.top_layout.add_widget(mainbutton)

@@ -10,14 +10,9 @@
 
     BoxLayout:
         id: topLayoutID
-        #cols: 2
         orientation: 'vertical'
-        #size_hint: 1, .05
-       # pos_hint: {'x': 0, 'y': .95}
 
         Label:
-            font_size: 25  
-            center_x: root.width / 2
-            top: root.top - (root.top / 10)
+            font_size: sp(15)  
             font_name: 'DejaVuSans'
             text: root.unicode_string
