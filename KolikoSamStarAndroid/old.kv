@@ -3,10 +3,8 @@
     id: home_screen
 
     top_layout: topLayoutID
-    #notes_dropdown: notesDropDownID
-
-
-    
+    btnDay: buttonDayID
+    btnMonth: buttonMonthID
 
     BoxLayout:
         id: topLayoutID
@@ -16,3 +14,15 @@
             font_size: sp(15)  
             font_name: 'DejaVuSans'
             text: root.unicode_string
+        
+        Button:
+            id: buttonDayID
+            text: 'Dan'
+            size_hint: (0.5, 0.3)
+            pos_hint: {'center_x': 0.5}
+        
+        Button:
+            id: buttonMonthID
+            text: 'Mjesec'
+            size_hint: (0.5, 0.3)
+            pos_hint: {'center_x': 0.5}
