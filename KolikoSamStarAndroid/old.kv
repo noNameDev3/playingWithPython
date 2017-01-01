@@ -5,24 +5,65 @@
     top_layout: topLayoutID
     btnDay: buttonDayID
     btnMonth: buttonMonthID
+    btnYear: buttonYearID
+    btnAsk: askID
+    result: rezultatID
 
     BoxLayout:
         id: topLayoutID
         orientation: 'vertical'
+        spacing: '15sp'
 
         Label:
             font_size: sp(15)  
             font_name: 'DejaVuSans'
             text: root.unicode_string
+            size_hint: (0.5, 1.5)
+            pos_hint: {'center_x': 0.5}
+
         
         Button:
             id: buttonDayID
-            text: 'Dan'
-            size_hint: (0.5, 0.3)
+            text: 'Odaberite dan'
+            size_hint: (0.5, 1)
             pos_hint: {'center_x': 0.5}
         
         Button:
             id: buttonMonthID
-            text: 'Mjesec'
-            size_hint: (0.5, 0.3)
+            text: 'Odaberite mjesec'
+            size_hint: (0.5, 1)
             pos_hint: {'center_x': 0.5}
+
+        Button:
+            id: buttonYearID
+            text: 'Odaberite godinu'
+            size_hint: (0.5, 1)
+            pos_hint: {'center_x': 0.5}
+
+        Label:
+            font_size: sp(15)  
+            font_name: 'DejaVuSans'
+            size_hint: (0.5, .5)
+            pos_hint: {'center_x': 0.5}
+
+        Button:
+            id: askID
+            text: 'Izracunaj'
+            size_hint: (0.25, 1)
+            pos_hint: {'center_x': 0.5}
+
+        Label:
+            id: rezultatID
+            font_size: sp(15)  
+            font_name: 'DejaVuSans'
+            text: root.unicode_string
+            size_hint: (0.5, 3.5)
+            pos_hint: {'center_x': 0.5}
+
+
+
+
+
+
+
+
