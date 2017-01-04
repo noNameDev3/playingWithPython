@@ -8,50 +8,30 @@ from kivy.properties import ObjectProperty
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
-
-class CustomDropDown(DropDown):
-    for i in range(5):
-        print (i) 
-
-class Birthday():
-
-    date = 29
-
-    def setDate(dummy, selectedDate):
-        Birthday.date = selectedDate
-    
-    def getDate(dummy):
-        return Birthday.date
+import birthday
+import datetime
+from dateutil.relativedelta import relativedelta
 
 class HomeScreen(Screen):
 
     top_layout = ObjectProperty(None)
+    btnDay = ObjectProperty(None)
+    btnMonth = ObjectProperty(None)
+    btnYear = ObjectProperty(None)
+    btnAsk = ObjectProperty(None)
+
     result = ObjectProperty(None)
-    birthday = Birthday()
+    birthday = birthday.Birthday()
 
     unicode_string = StringProperty("""Unesite dan, mjesec i godinu rodenja: """)
 
-    def on_pause(self):
-        return True
-
-    def calculateAge(self, button):
-
-
-
-
-        self.result.text = self.birthday.getDate()
-
-
-        print("from first")
+    #def on_pause(self):
+        #return True
 
     def __init__(self, *args, **kwargs):
         super(HomeScreen, self).__init__(*args, **kwargs)
-        self.drop_down = CustomDropDown()
-        #notes_dropdown = ObjectProperty(None)
-
-
         dropdown = DropDown()
-        #notes = ['Features', 'Suggestions', 'Abreviations', 'Miscellaneous']
+
         for note in range(1,32):
             # when adding widgets, we need to specify the height manually (disabling
             # the size_hint_y) so the dropdown can calculate the area it needs.
@@ -74,33 +54,30 @@ class HomeScreen(Screen):
         # mainbutton instance) as the first argument of the callback (here,
         # dropdown.open.).
         self.btnDay.bind(on_release=dropdown.open)
-        #dd_btn.bind(on_release=dropdown.open)
 
         # one last thing, listen for the selection in the dropdown list and
         # assign the data to the button text.
-        dropdown.bind(on_select=lambda instance, x: setattr(self.btnDay, 'text', "Dan: " + x))
+        dropdown.bind(on_select=lambda instance, x: self.setDay(self, x))
 
         #dropdown.bind(on_select=lambda instance, x: setattr(dd_btn, 'text', x))
 
-        #self.top_layout.add_widget(button_day)
-
-########################### Month ########################################
+  ########################### Month ########################################
 
 
         dropdownMonth = DropDown()
         #notes = ['Features', 'Suggestions', 'Abreviations', 'Miscellaneous']
-        for month in range(1,13):
+        for monthNo in range(1,13):
             # when adding widgets, we need to specify the height manually (disabling
             # the size_hint_y) so the dropdown can calculate the area it needs.
-            btnMonth = Button(text='%r' % month, size_hint_y=None, height='50sp',background_color=(.5,.5,.5,1))
+            month = Button(text='%s' % monthNo, size_hint_y=None, height='50sp',background_color=(.5,.5,.5,1))
 
             # for each button, attach a callback that will call the select() method
             # on the dropdown. We'll pass the text of the button as the data of the
             # selection.
-            btnMonth.bind(on_release=lambda btn: dropdownMonth.select(btnMonth.text))
+            month.bind(on_release=lambda month: dropdownMonth.select(month.text))
 
             # then add the button inside the dropdown
-            dropdownMonth.add_widget(btnMonth)
+            dropdownMonth.add_widget(month)
 
         # create a big main button
 
@@ -112,14 +89,15 @@ class HomeScreen(Screen):
         # dropdown.open.).
         self.btnMonth.bind(on_release=dropdownMonth.open)
         #dd_btn.bind(on_release=dropdown.open)
+        print ('1') 
 
         # one last thing, listen for the selection in the dropdown list and
         # assign the data to the button text.
-        dropdownMonth.bind(on_select=lambda instance, x: setattr(self.btnMonth, 'text', "Mjesec: " + x))
+        dropdownMonth.bind(on_select=lambda instance, x: self.setMonth(self, x))
+        print ('2') 
 
         #dropdown.bind(on_select=lambda instance, x: setattr(dd_btn, 'text', x))
 
-        self.btnAsk.bind(on_release=self.calculateAge)
 
        # self.top_layout.add_widget(mainbuttonMonth)
 
@@ -136,7 +114,7 @@ class HomeScreen(Screen):
             # for each button, attach a callback that will call the select() method
             # on the dropdown. We'll pass the text of the button as the data of the
             # selection.
-            btnYear.bind(on_release=lambda btn: dropdownYear.select(btnYear.text))
+            btnYear.bind(on_release=lambda btnYear: dropdownYear.select(btnYear.text))
 
             # then add the button inside the dropdown
             dropdownYear.add_widget(btnYear)
@@ -159,12 +137,41 @@ class HomeScreen(Screen):
 
         #dropdown.bind(on_select=lambda instance, x: setattr(dd_btn, 'text', x))
 
-       # self.top_layout.add_widget(mainbuttonMonth)
+        # self.top_layout.add_widget(mainbuttonMonth)
+
+        self.btnAsk.bind(on_release=self.calculateAge)
+
 
     def setYear(dummy, self, x):
         self.btnYear.text = "Godina: " + x
-        self.birthday.setDate(x)
+        self.birthday.setYear(x)
 
+    def setMonth(dummy, self, x):
+        self.btnMonth.text = "Mjesec: " + x
+        self.birthday.setMonth(x)
+
+    def setDay(dummy, self, x):
+        self.btnDay.text = "Dan: " + x
+        self.birthday.setDay(x)
+
+
+    def calculateAge(self, button):
+
+        #self.result.text = self.birthday.getDay() + self.birthday.getMonth() + self.birthday.getYear()
+
+        try:
+            print(self.birthday.getYear())
+            print(self.birthday.getMonth())
+            print(self.birthday.getDay())
+            rodjendan = datetime.date(int(self.birthday.getYear()), int(self.birthday.getMonth()), int(self.birthday.getDay()))
+            star = relativedelta(datetime.date.today(), rodjendan)
+            self.result.text = ("Rodjeni ste %d.%d.%d.\nVi ste danas stari tocno %d godina, %d mjeseci i %d dana." % (rodjendan.day, rodjendan.month, rodjendan.year, star.years, star.months,star.days))
+        except (ValueError, TypeError):
+            self.result.text = "Upisao si nevazeci datum. Pokusaj ponovno."
+
+
+
+        print("from first")
 
 
 class oldApp(App):
