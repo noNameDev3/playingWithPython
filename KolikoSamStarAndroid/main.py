@@ -17,8 +17,9 @@ class HomeScreen(Screen):
     top_layout = ObjectProperty(None)
     btnDay = ObjectProperty(None)
     btnMonth = ObjectProperty(None)
-    btnYear = ObjectProperty(None)
+    #btnYear = ObjectProperty(None)
     btnAsk = ObjectProperty(None)
+    yearInput = ObjectProperty(None)
 
     result = ObjectProperty(None)
     birthday = birthday.Birthday()
@@ -104,47 +105,50 @@ class HomeScreen(Screen):
 ########################### Year ########################################
 
 
-        dropdownYear = DropDown()
-        #notes = ['Features', 'Suggestions', 'Abreviations', 'Miscellaneous']
-        for year in range(1950,2018):
-            # when adding widgets, we need to specify the height manually (disabling
-            # the size_hint_y) so the dropdown can calculate the area it needs.
-            btnYear = Button(text='%r' % year, size_hint_y=None, height='50sp',background_color=(.5,.5,.5,1))
+        # dropdownYear = DropDown()
+        # #notes = ['Features', 'Suggestions', 'Abreviations', 'Miscellaneous']
+        # for year in range(1950,2018):
+        #     # when adding widgets, we need to specify the height manually (disabling
+        #     # the size_hint_y) so the dropdown can calculate the area it needs.
+        #     btnYear = Button(text='%r' % year, size_hint_y=None, height='50sp',background_color=(.5,.5,.5,1))
 
-            # for each button, attach a callback that will call the select() method
-            # on the dropdown. We'll pass the text of the button as the data of the
-            # selection.
-            btnYear.bind(on_release=lambda btnYear: dropdownYear.select(btnYear.text))
+        #     # for each button, attach a callback that will call the select() method
+        #     # on the dropdown. We'll pass the text of the button as the data of the
+        #     # selection.
+        #     btnYear.bind(on_release=lambda btnYear: dropdownYear.select(btnYear.text))
 
-            # then add the button inside the dropdown
-            dropdownYear.add_widget(btnYear)
+        #     # then add the button inside the dropdown
+        #     dropdownYear.add_widget(btnYear)
 
-        # create a big main button
+        # # create a big main button
 
-        print ('yay') 
+        # print ('yay') 
 
-        # show the dropdown menu when the main button is released
-        # note: all the bind() calls pass the instance of the caller (here, the
-        # mainbutton instance) as the first argument of the callback (here,
-        # dropdown.open.).
-        self.btnYear.bind(on_release=dropdownYear.open)
-        #dd_btn.bind(on_release=dropdown.open)
+        # # show the dropdown menu when the main button is released
+        # # note: all the bind() calls pass the instance of the caller (here, the
+        # # mainbutton instance) as the first argument of the callback (here,
+        # # dropdown.open.).
+        # self.yearInput.bind(on_select=dropdownYear.open)
+        # #dd_btn.bind(on_release=dropdown.open)
 
-        # one last thing, listen for the selection in the dropdown list and
-        # assign the data to the button text.
-        dropdownYear.bind(on_select=lambda instance, x: self.setYear(self, x))
-        #dropdownYear.bind(on_select=setYear(self, x))
+        # # one last thing, listen for the selection in the dropdown list and
+        # # assign the data to the button text.
+        # dropdownYear.bind(on_select=lambda instance, x: self.setYear(self, x))
+        # #dropdownYear.bind(on_select=setYear(self, x))
 
-        #dropdown.bind(on_select=lambda instance, x: setattr(dd_btn, 'text', x))
+        # #dropdown.bind(on_select=lambda instance, x: setattr(dd_btn, 'text', x))
 
-        # self.top_layout.add_widget(mainbuttonMonth)
+        # # self.top_layout.add_widget(mainbuttonMonth)
 
         self.btnAsk.bind(on_release=self.calculateAge)
 
 
-    def setYear(dummy, self, x):
-        self.btnYear.text = "Godina: " + x
-        self.birthday.setYear(x)
+    # def setYear(dummy, self, x):
+    #     self.btnYear.text = "Godina: " + x
+    #     self.birthday.setYear(x)
+
+    def setYear(dummy, self):
+        self.birthday.setYear(self.yearInput.text)
 
     def setMonth(dummy, self, x):
         self.btnMonth.text = "Mjesec: " + x
@@ -159,13 +163,18 @@ class HomeScreen(Screen):
 
         #self.result.text = self.birthday.getDay() + self.birthday.getMonth() + self.birthday.getYear()
 
+        self.setYear(self)
+        self.yearInput.text = ""
+        self.btnDay.text = "Odaberite dan"
+        self.btnMonth.text = "Odaberite mjesec"
+
         try:
             print(self.birthday.getYear())
             print(self.birthday.getMonth())
             print(self.birthday.getDay())
             rodjendan = datetime.date(int(self.birthday.getYear()), int(self.birthday.getMonth()), int(self.birthday.getDay()))
             star = relativedelta(datetime.date.today(), rodjendan)
-            self.result.text = ("Rodjeni ste %d.%d.%d.\nVi ste danas stari tocno %d godina, %d mjeseci i %d dana." % (rodjendan.day, rodjendan.month, rodjendan.year, star.years, star.months,star.days))
+            self.result.text = ("Rodjeni ste %d.%d.%d.\n\nVi ste danas stari tocno %d godina, %d mjeseci i %d dana." % (rodjendan.day, rodjendan.month, rodjendan.year, star.years, star.months,star.days))
         except (ValueError, TypeError):
             self.result.text = "Upisao si nevazeci datum. Pokusaj ponovno."
 
