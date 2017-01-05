@@ -24,10 +24,13 @@ class HomeScreen(Screen):
     result = ObjectProperty(None)
     birthday = birthday.Birthday()
 
-    unicode_string = StringProperty("""Unesite dan, mjesec i godinu rodenja: """)
+    unicode_string = StringProperty("Unesite dan, mjesec i godinu rođenja:")
 
-    #def on_pause(self):
-        #return True
+    def on_pause(self):
+        return True
+
+    def on_pause(self):
+        pass
 
     def __init__(self, *args, **kwargs):
         super(HomeScreen, self).__init__(*args, **kwargs)
@@ -174,9 +177,9 @@ class HomeScreen(Screen):
             print(self.birthday.getDay())
             rodjendan = datetime.date(int(self.birthday.getYear()), int(self.birthday.getMonth()), int(self.birthday.getDay()))
             star = relativedelta(datetime.date.today(), rodjendan)
-            self.result.text = ("Rodjeni ste %d.%d.%d.\n\nVi ste danas stari tocno %d godina, %d mjeseci i %d dana." % (rodjendan.day, rodjendan.month, rodjendan.year, star.years, star.months,star.days))
+            self.result.text = ("RoĐeni ste %d.%d.%d.\n\nVi ste danas stari točno %d godina, %d mjeseci i %d dana." % (rodjendan.day, rodjendan.month, rodjendan.year, star.years, star.months,star.days))
         except (ValueError, TypeError):
-            self.result.text = "Upisao si nevazeci datum. Pokusaj ponovno."
+            self.result.text = "Upisali ste nevažeći datum. Pokušajte ponovno."
 
 
 
