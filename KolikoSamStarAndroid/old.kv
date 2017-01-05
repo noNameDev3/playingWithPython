@@ -44,7 +44,10 @@
         TextInput:
             id: yearInputID
             halign: 'center'
-            hint_text: 'Upisite godinu'
+            hint_text: 'Upišite godinu'
+            hint_text_color:(1,1,1,1)
+            foreground_color: (1,1,1,1)
+            background_color: (.5,.5,.5,1)
             size_hint: (0.5, 1)
             pos_hint: {'center_x': 0.5}
 
@@ -56,7 +59,7 @@
 
         Button:
             id: askID
-            text: 'Izracunaj'
+            text: 'Izračunaj'
             size_hint: (0.25, 1)
             pos_hint: {'center_x': 0.5}
 
@@ -67,7 +70,7 @@
             font_name: 'DejaVuSans'
             halign: 'center'
             valign: 'middle'
-            text: root.unicode_string
+            text: ""
             size_hint: (0.8, 3.5)
             pos_hint: {'center_x': 0.5}
 
