@@ -75,26 +75,37 @@ class HomeScreen(Screen):
     def croatianGrammar(dummy, croText, old):
         print("in cro")
         if abs(old.days) % 10 == 0:
-            croText[0] = "godina"
-            croText[1] = "mjeseci"
             croText[2] = "dana"
         elif abs(old.days) % 10 == 1 and abs(old.days) % 100 != 11:
-            croText[0] = "godinu"
-            croText[1] = "mjesec"
             croText[2] = "dan"
         elif abs(old.days) % 100 > 10 and abs(old.days) % 100 < 20:
-            croText[0] = "godina"
-            croText[1] = "mjeseci"
             croText[2] = "dana"
         elif abs(old.days) % 10 > 1 and abs(old.days) % 10 < 5:
-            croText[0] = "godine"
-            croText[1] = "mjeseca"
             croText[2] = "dana"
         else:
-            croText[0] = "godina"
-            croText[1] = "mjeseci"
             croText[2] = "dana"
 
+        if abs(old.months) % 10 == 0:
+            croText[1] = "mjeseci"
+        elif abs(old.months) % 10 == 1 and abs(old.months) % 100 != 11:
+            croText[1] = "mjesec"
+        elif abs(old.months) % 100 > 10 and abs(old.months) % 100 < 20:
+            croText[1] = "mjeseci"
+        elif abs(old.months) % 10 > 1 and abs(old.months) % 10 < 5:
+            croText[1] = "mjeseca"
+        else:
+            croText[1] = "mjeseci"
+
+        if abs(old.years) % 10 == 0:
+            croText[0] = "godina"
+        elif abs(old.years) % 10 == 1 and abs(old.years) % 100 != 11:
+            croText[0] = "godinu"
+        elif abs(old.years) % 100 > 10 and abs(old.years) % 100 < 20:
+            croText[0] = "godina"
+        elif abs(old.years) % 10 > 1 and abs(old.years) % 10 < 5:
+            croText[0] = "godine"
+        else:
+            croText[0] = "godina"
 
     def calculateAge(self, button):
 
