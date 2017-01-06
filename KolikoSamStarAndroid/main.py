@@ -31,6 +31,8 @@ class HomeScreen(Screen):
         super(HomeScreen, self).__init__(*args, **kwargs)
         dropdown = DropDown()
 
+  ########################### Day ########################################
+
         for note in range(1,32):
             btn = Button(text='%r' % note, size_hint_y=None, height='50sp', background_color=(.5,.5,.5,1))
 
@@ -70,6 +72,29 @@ class HomeScreen(Screen):
         self.btnDay.text = "Dan: " + x
         self.birthday.setDay(x)
 
+    def croatianGrammar(dummy, croText, old):
+        print("in cro")
+        if abs(old.days) % 10 == 0:
+            croText[0] = "godina"
+            croText[1] = "mjeseci"
+            croText[2] = "dana"
+        elif abs(old.days) % 10 == 1 and abs(old.days) % 100 != 11:
+            croText[0] = "godinu"
+            croText[1] = "mjesec"
+            croText[2] = "dan"
+        elif abs(old.days) % 100 > 10 and abs(old.days) % 100 < 20:
+            croText[0] = "godina"
+            croText[1] = "mjeseci"
+            croText[2] = "dana"
+        elif abs(old.days) % 10 > 1 and abs(old.days) % 10 < 5:
+            croText[0] = "godine"
+            croText[1] = "mjeseca"
+            croText[2] = "dana"
+        else:
+            croText[0] = "godina"
+            croText[1] = "mjeseci"
+            croText[2] = "dana"
+
 
     def calculateAge(self, button):
 
@@ -78,13 +103,29 @@ class HomeScreen(Screen):
         self.btnDay.text = "Odaberite dan"
         self.btnMonth.text = "Odaberite mjesec"
 
+        croText = ["", "", ""]
+
         try:
             print(self.birthday.getYear())
             print(self.birthday.getMonth())
             print(self.birthday.getDay())
-            rodjendan = datetime.date(int(self.birthday.getYear()), int(self.birthday.getMonth()), int(self.birthday.getDay()))
-            star = relativedelta(datetime.date.today(), rodjendan)
-            self.result.text = ("RoĐeni ste %d.%d.%d.\n\nVi ste danas stari točno %d godina, %d mjeseci i %d dana." % (rodjendan.day, rodjendan.month, rodjendan.year, star.years, star.months,star.days))
+            rodjendan = datetime.date \
+                (int(self.birthday.getYear()), int(self.birthday.getMonth()), int(self.birthday.getDay()))
+            old = relativedelta(datetime.date.today(), rodjendan)
+
+            self.croatianGrammar(croText, old)
+
+            danas = datetime.date.today()
+            if rodjendan < danas:
+                self.result.text = ("Rođeni ste %d.%d.%d.\n\nVi ste danas stari %d %s, %d %s i %d %s." \
+                     % (rodjendan.day, rodjendan.month, rodjendan.year, old.years,croText[0],  \
+                      old.months, croText[1], old.days, croText[2]))
+            elif rodjendan > danas:
+                self.result.text = ("Dobro došao u %d. putniče iz budućnosti.\nRoditi ćeš se za %d %s, %d %s i %d %s." \
+                    % (datetime.date.today().year, abs(old.years),croText[0], abs(old.months),  \
+                    croText[1], abs(old.days), croText[2]))
+            else:
+                self.result.text = ("Ti si se rodio danas. Dobrodošao na svijet ;)")
         except (ValueError, TypeError):
             self.result.text = "Upisali ste nevažeći datum. Pokušajte ponovno."
 
