@@ -56,7 +56,13 @@ class HomeScreen(Screen):
 
         self.btnMonth.bind(on_release=dropdownMonth.open)
         dropdownMonth.bind(on_select=lambda instance, x: self.setMonth(self, x))
- 
+
+ ########################### Year ###########################################
+
+        self.yearInput.hint_text = "Upisite godinu"
+
+        self.btnAsk.text = "Izračunaj"
+
  ###########################################################################
         self.btnAsk.bind(on_release=self.calculateAge)
 
