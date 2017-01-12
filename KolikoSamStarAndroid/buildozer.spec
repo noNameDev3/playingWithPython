@@ -46,10 +46,10 @@ requirements = kivy,python-dateutil,datetime
 #garden_requirements =
 
 # (str) Presplash of the application
-presplash.filename = ./pics/smiley.png
+presplash.filename = ./pics/kolikoSamStarLoading.png
 
 # (str) Icon of the application
-icon.filename = ./pics/smiley.png
+icon.filename = ./pics/kolikoSamStar.png
 
 # (str) Supported orientation (one of landscape, portrait or all)
 orientation = portrait
