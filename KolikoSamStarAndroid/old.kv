@@ -1,16 +1,12 @@
 
 <HomeScreen>:
-    id: home_screen
-
-    top_layout: topLayoutID
     btnDay: buttonDayID
     btnMonth: buttonMonthID
     yearInput: yearInputID
     btnAsk: askID
-    result: rezultatID
+    result: resultID
 
     BoxLayout:
-        id: topLayoutID
         orientation: 'vertical'
         spacing: '15sp'
 
@@ -20,7 +16,6 @@
             text: root.unicode_string
             size_hint: (0.5, 1.5)
             pos_hint: {'center_x': 0.5}
-
         
         Button:
             id: buttonDayID
@@ -56,7 +51,7 @@
             pos_hint: {'center_x': 0.5}
 
         Label:
-            id: rezultatID
+            id: resultID
             text_size: self.size
             font_size: sp(15)  
             font_name: 'DejaVuSans'
