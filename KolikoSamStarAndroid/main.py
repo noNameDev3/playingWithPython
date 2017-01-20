@@ -38,7 +38,7 @@ class HomeScreen(Screen):
             dropdownDay.add_widget(btnDay)
 
         self.btnDay.bind(on_release=dropdownDay.open)
-        dropdownDay.bind(on_select=lambda instance, x: self.setDay(self, x))
+        dropdownDay.bind(on_select=lambda instance, x: self.setDay(x))
 
   ########################### Month #####################################
 
@@ -49,7 +49,7 @@ class HomeScreen(Screen):
             dropdownMonth.add_widget(btnMonth)
 
         self.btnMonth.bind(on_release=dropdownMonth.open)
-        dropdownMonth.bind(on_select=lambda instance, x: self.setMonth(self, x))
+        dropdownMonth.bind(on_select=lambda instance, x: self.setMonth(x))
 
  ########################### Year ########################################
 
@@ -62,18 +62,18 @@ class HomeScreen(Screen):
 
  #########################################################################
 
-    def setYear(dummy, self):
+    def setYear(self):
         self.birthday.setYear(self.yearInput.text)
 
-    def setMonth(dummy, self, x):
+    def setMonth(self, x):
         self.btnMonth.text = "Mjesec: " + x
         self.birthday.setMonth(x)
 
-    def setDay(dummy, self, x):
+    def setDay(self, x):
         self.btnDay.text = "Dan: " + x
         self.birthday.setDay(x)
 
-    def croatianGrammar(dummy, croText, old):
+    def croatianGrammar(self, croText, old):
         if abs(old.days) % 10 == 0:
             croText[2] = "dana"
         elif abs(old.days) % 10 == 1 and abs(old.days) % 100 != 11:
@@ -108,7 +108,7 @@ class HomeScreen(Screen):
             croText[0] = "godina"
 
     def calculateAge(self, button):
-        self.setYear(self)
+        self.setYear()
         self.yearInput.text = ""
         self.btnDay.text = "Odaberite dan"
         self.btnMonth.text = "Odaberite mjesec"
